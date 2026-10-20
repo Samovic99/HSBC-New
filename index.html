@@ -7,6 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
   :root{
     --navy:#0F2340; --navy-2:#16314F; --ink:#1A1D23; --paper:#F6F7F9;
@@ -326,6 +327,90 @@
   font-size: 13px;
   line-height: 1.5;
 }
+
+  /* Responsive layout improvements */
+  img, svg, video { max-width: 100%; }
+  button, input, select { max-width: 100%; }
+  .brand-name { overflow-wrap: anywhere; }
+  .topbar, .landing-nav { gap: 14px; }
+  .topbar .brand, .landing-nav .brand { min-width: 0; }
+  .user-chip { min-width: 0; flex-wrap: wrap; justify-content: flex-end; }
+  .user-chip span { overflow-wrap: anywhere; }
+  main { width: min(100%, 960px); }
+  .tx-left > div:last-child { min-width: 0; }
+  .tx-name, .detail-value { overflow-wrap: anywhere; }
+  .detail-row { align-items: flex-start; }
+  .detail-value { max-width: 65%; }
+  .panel-header, .pending-item-top { flex-wrap: wrap; }
+  .pending-item .summary-row { align-items: flex-start; }
+  .pending-item .summary-row > span:last-child { text-align: right; overflow-wrap: anywhere; }
+  @media (max-width: 700px) {
+    .landing-nav { padding: 14px 16px; }
+    .landing-nav .brand-name { font-size: 15px; }
+    .hero { padding: 32px 18px 48px; }
+    .topbar { align-items: flex-start; padding: 12px 14px; flex-wrap: wrap; }
+    .topbar .brand-name { font-size: 15px; }
+    .user-chip { font-size: 12px; gap: 7px; }
+    main { padding: 22px 14px 40px; }
+    .greeting { font-size: clamp(20px, 5vw, 24px); }
+    .panel-head, .panel-header { padding: 14px 16px; }
+    .tx { padding: 13px 14px; gap: 10px; }
+    .tx-icon { width: 32px; height: 32px; }
+    .tx-name { font-size: 13.5px; }
+    .tx-amt { font-size: 13px; white-space: normal; text-align: right; overflow-wrap: anywhere; }
+    .transfer-grid { padding: 16px; }
+    .pending-item { padding: 14px; }
+    .detail-list { padding: 4px 16px 16px; }
+    .detail-value { max-width: 60%; font-size: 13px; }
+    .login-card { padding: 28px 22px; }
+  }
+  @media (max-width: 420px) {
+    .landing-nav { align-items: flex-start; }
+    .landing-nav .brand { gap: 8px; }
+    .landing-nav .brand-mark, .topbar .brand-mark { width: 30px; height: 30px; }
+    .nav-login { padding: 8px 11px; flex: none; }
+    .user-chip { width: 100%; justify-content: flex-start; }
+    .tx { align-items: flex-start; }
+    .tx-left { gap: 9px; }
+    .tx-amt { max-width: 100px; }
+    .summary-row, .pending-item .summary-row { gap: 10px; }
+    .detail-row { flex-direction: column; gap: 4px; }
+    .detail-value { max-width: 100%; text-align: left; }
+    .login-card { padding: 24px 18px; }
+  }
+  .demo-banner {
+    margin: 0 auto 14px;
+    width: min(100% - 28px, 920px);
+    padding: 10px 14px;
+    border: 1px solid #d6a33a;
+    border-radius: 6px;
+    background: #fff7df;
+    color: #624600;
+    font-size: 12px;
+    line-height: 1.5;
+    font-weight: 700;
+    text-align: center;
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+
+img, video { max-width: 100%; height: auto; }
+
+.container {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+}
+@media (max-width: 768px) {
+  .nav { flex-direction: column; }
+  .two-col { grid-template-columns: 1fr; }
+  h1 { font-size: 1.75rem; }
+}
   </style>
 </head>
 <body>
@@ -394,7 +479,7 @@
       <div class="brand-name">Hongkong and Shanghai Banking Corporation Limited</div>
     </div>
     <div class="user-chip">
-      <div class="avatar"><img src="/img/china.jpg" alt="Alex Morgan"></div>
+      <div class="avatar"><img src="/img/china.jpeg" alt="Profile Picture"></div>
       <span>ZHANG SHAOQIONG</span>
       <button class="logout" id="logoutBtn">Sign out</button>
     </div>
@@ -407,12 +492,12 @@
     <div class="accounts">
       <div class="acct-card">
         <p class="acct-label">Everyday Checking</p>
-        <p class="acct-balance">$3,812,345.63</p>
+        <p class="acct-balance">$0</p>
         <p class="acct-num">Account •••• 7142</p>
       </div>
       <div class="acct-card">
         <p class="acct-label">Growth Savings</p>
-        <p class="acct-balance">$8,250,340.00</p>
+        <p class="acct-balance">$0</p>
         <p class="acct-num">Account •••• 3390</p>
       </div>
     </div>
@@ -423,41 +508,13 @@
         <li class="tx">
           <div class="tx-left">
             <div class="tx-icon">↓</div>
-            <div><p class="tx-name">Payroll deposit — Northwind Co.</p><p class="tx-date">Oct 17</p></div>
+    <div>
+              <p class="tx-name">Pending withdrawal</p>
+              <span class="transaction-status">Pending</span>
+            </div>
           </div>
-          <div class="tx-amt pos">+$2,140.00</div>
+          <div class="tx-amt neg">−$6,000,000.00</div>
         </li>
-        <li class="tx">
-          <div class="tx-left">
-            <div class="tx-icon out">↑</div>
-            <div><p class="tx-name">Rent — Parkview Leasing</p><p class="tx-date">Oct 15</p></div>
-          </div>
-          <div class="tx-amt neg">−$1,350.00</div>
-        </li>
-        <li class="tx">
-          <div class="tx-left">
-            <div class="tx-icon out">↑</div>
-            <div><p class="tx-name">Grocery — Lakeside Market</p><p class="tx-date">Oct 13</p></div>
-          </div>
-          <div class="tx-amt neg">−$64.27</div>
-        </li>
-        <li class="tx">
-          <div class="tx-left">
-            <div class="tx-icon">↓</div>
-            <div><p class="tx-name">Transfer from Growth Savings</p><p class="tx-date">Oct 10</p></div>
-          </div>
-          <div class="tx-amt pos">+$300.00</div>
-        </li>
-        <li class="tx">
-          <div class="tx-left">
-            <div class="tx-icon out">↑</div>
-            <div><p class="tx-name">Electric bill — CityPower</p><p class="tx-date">Oct 6</p></div>
-          </div>
-          <div class="tx-amt neg">−$88.41</div>
-        </li>
-      </ul>
-    </div>
-
     <div class="panel">
       <div class="panel-head"><h2>Move money</h2></div>
       <p class="fee-note"></p>
@@ -527,7 +584,29 @@
 <section class="panel pending-transactions">
   <div class="panel-header">
     <h2>Pending Transactions</h2>
-    <span class="status-badge">1 Pending</span>
+    <span class="status-badge">Pending</span>
+  </div>
+
+  <div class="pending-item">
+    <div class="pending-item-top">
+      <div>
+        <h3>Withdrawal Request — $6,000,000.00</h3>
+        <p class="transaction-ref">Reference:WD-20261020-001</p>
+      </div>
+      <span class="transaction-status">Pending</span>
+    </div>
+    <div class="summary-row">
+      <span class="lbl">Transaction type</span>
+      <span>Withdrawal</span>
+    </div>
+    <div class="summary-row">
+      <span class="lbl">Amount</span>
+      <span>−$6,000,000.00</span>
+    </div>
+    <div class="summary-row">
+      <span class="lbl">Status</span>
+      <span>Submitted to a bank</span>
+    </div>
   </div>
 
   <div class="pending-item">
