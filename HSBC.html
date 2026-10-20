@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Hongkong and Shanghai Banking Corporation Limited &amp; Trust — Online Banking</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0F2340; --navy-2:#16314F; --ink:#1A1D23; --paper:#F6F7F9;
+    --card:#FFFFFF; --line:#E3E6EC; --mint:#1E7A4C; --mint-soft:#E6F3EC;
+    --gold:#B8912F; --red:#B3432B; --muted:#6B7280; --focus:#2563EB;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper:#0B1220; --card:#121A2B; --line:#223047; --ink:#E7EAF0;
+      --muted:#93A0B4; --mint-soft:#113327; color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#0B1220; --card:#121A2B; --line:#223047; --ink:#E7EAF0;
+    --muted:#93A0B4; --mint-soft:#113327; color-scheme: dark;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-padding-top:env(safe-area-inset-top,0px);}
+  body{
+    margin:0; background:var(--paper); color:var(--ink);
+    font-family:'Inter',system-ui,sans-serif;
+    padding-top:env(safe-area-inset-top,0px);
+    padding-bottom:env(safe-area-inset-bottom,0px);
+  }
+  .serif{font-family:'Fraunces',Georgia,serif;}
+  a{color:inherit;}
+
+  /* ---- Landing page ---- */
+#landing {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background:
+    linear-gradient(
+      rgba(10, 28, 53, 0.72),
+      rgba(10, 28, 53, 0.82)
+    ),
+    url("img/landing.jpg") center / cover no-repeat;
+}
+
+/* Make landing-page text readable */
+#landing .brand-name,
+#landing .hero h1 {
+  color: #fff;
+}
+
+#landing .hero p,
+#landing .landing-foot {
+  color: rgba(255, 255, 255, 0.86);
+}
+  .landing-nav{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:18px 28px; padding-top:calc(18px + env(safe-area-inset-top,0px));
+  }
+  .nav-login{
+    background:var(--navy); color:#fff; border:none; padding:9px 18px; border-radius:4px;
+    font-size:14px; font-weight:600; cursor:pointer; font-family:inherit;
+  }
+  .hero{
+    flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center;
+    text-align:center; padding:40px 24px 64px;
+  }
+  .hero h1{
+    font-family:'Fraunces',serif; font-weight:600; font-size:clamp(32px,6vw,52px);
+    max-width:14ch; margin:0 0 16px; line-height:1.08;
+  }
+  .hero p{color:var(--muted); font-size:16px; max-width:40ch; margin:0 0 30px;}
+  .hero-cta{
+    background:var(--mint); color:#fff; border:none; padding:13px 28px; border-radius:4px;
+    font-size:15.5px; font-weight:600; cursor:pointer; font-family:inherit;
+  }
+  .hero-cta:hover{filter:brightness(0.96);}
+  .landing-foot{
+    text-align:center; font-size:12px; color:var(--muted); padding:0 20px 28px;
+  }
+
+  /* ---- Login screen ---- */
+#login {
+  min-height: 100vh;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+
+  background:
+    linear-gradient(
+      rgba(35, 49, 77, 0.55),
+      rgba(10, 28, 53, 0.72)
+    ),
+    url("img/loginpage.jpg") center / cover no-repeat;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 380px;
+  background: #fff;
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 10px;
+  padding: 36px 32px;
+  box-shadow: 0 18px 55px rgba(0, 0, 0, 0.24);
+}
+  .login-card{
+    width:100%; max-width:380px; background:var(--card); border:1px solid var(--line);
+    border-radius:4px; padding:36px 32px;
+  }
+  .brand{display:flex; align-items:center; gap:10px; margin-bottom:28px;}
+  .brand-mark{
+    width:34px; height:34px; border-radius:50%; background:var(--navy);
+    display:flex; align-items:center; justify-content:center; color:#fff;
+    font-family:'Fraunces',serif; font-weight:600; font-size:17px; flex:none;
+  }
+  .brand-name{font-family:'Fraunces',serif; font-weight:600; font-size:19px;}
+  .login-card h1{font-size:22px; margin:0 0 6px; font-weight:600;}
+  .login-card p.sub{color:var(--muted); font-size:14px; margin:0 0 24px;}
+  label{display:block; font-size:13px; color:var(--muted); margin:16px 0 6px;}
+  input{
+    width:100%; padding:11px 12px; border:1px solid var(--line); border-radius:4px;
+    background:var(--paper); color:var(--ink); font-size:15px; font-family:inherit;
+  }
+  input:focus-visible, button:focus-visible{outline:2px solid var(--focus); outline-offset:2px;}
+  .demo-note{
+    margin-top:14px; font-size:12.5px; color:var(--muted); background:var(--mint-soft);
+    border-radius:4px; padding:10px 12px; line-height:1.5;
+  }
+  .demo-note b{color:var(--ink);}
+  button.primary{
+    width:100%; margin-top:22px; padding:12px; border:none; border-radius:4px;
+    background:var(--navy); color:#fff; font-size:15px; font-weight:600; cursor:pointer;
+    font-family:inherit;
+  }
+  button.primary:hover{background:var(--navy-2);}
+  .fine{font-size:11.5px; color:var(--muted); text-align:center; margin-top:22px;}
+
+  /* ---- App shell ---- */
+  #app{
+    display:block; min-height:100vh;
+    background-color:var(--paper);
+    background-image:
+      radial-gradient(circle at 1px 1px, var(--line) 1px, transparent 0),
+      linear-gradient(160deg, var(--navy) 0%, var(--navy) 38%, var(--paper) 38%);
+    background-size: 22px 22px, 100% 100%;
+    background-attachment: fixed, fixed;
+  }
+  .topbar{
+    position:sticky; top:0; z-index:5; display:flex; align-items:center;
+    justify-content:space-between; padding:14px 20px; background:transparent; color:#fff;
+    padding-top:calc(14px + env(safe-area-inset-top,0px));
+  }
+  .topbar .brand-name{color:#fff;}
+  .topbar .brand-mark{background:#fff; color:var(--navy);}
+  .user-chip{display:flex; align-items:center; gap:10px; font-size:14px;}
+  .avatar{
+    width:32px; height:32px; border-radius:50%; background:var(--gold); color:#fff;
+    display:flex; align-items:center; justify-content:center; font-weight:600; font-size:13px;
+    overflow:hidden;
+  }
+  .avatar img{width:100%; height:100%; object-fit:cover; display:block;}
+  .logout{
+    background:transparent; border:1px solid rgba(255,255,255,.35); color:#fff;
+    padding:7px 12px; border-radius:4px; font-size:13px; cursor:pointer; font-family:inherit;
+  }
+  main{max-width:920px; margin:0 auto; padding:28px 20px 60px; position:relative; z-index:1;}
+  .greeting{font-size:24px; margin:0 0 4px; font-weight:600; color:#fff;}
+  .greeting-sub{color:rgba(255,255,255,.72); font-size:14px; margin:0 0 24px;}
+
+  .accounts{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:28px;}
+  @media (max-width:600px){.accounts{grid-template-columns:1fr;}}
+  .acct-card{
+    background:var(--card); border:1px solid var(--line); border-radius:6px; padding:20px;
+  }
+  .acct-label{font-size:12.5px; color:var(--muted); text-transform:none; margin:0 0 10px;}
+  .acct-balance{font-family:'Fraunces',serif; font-size:30px; font-weight:600; margin:0 0 4px;}
+  .acct-num{font-size:12.5px; color:var(--muted);}
+
+  .panel{
+    background:var(--card); border:1px solid var(--line); border-radius:6px; margin-bottom:20px;
+    overflow:hidden;
+  }
+  .panel-head{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:16px 20px; border-bottom:1px solid var(--line);
+  }
+  .panel-head h2{font-size:16px; margin:0; font-weight:600;}
+  .tx-list{list-style:none; margin:0; padding:0;}
+  .tx{
+    display:flex; align-items:center; justify-content:space-between; gap:12px;
+    padding:14px 20px; border-bottom:1px solid var(--line);
+  }
+  .tx:last-child{border-bottom:none;}
+  .tx-left{display:flex; align-items:center; gap:12px; min-width:0;}
+  .tx-icon{
+    width:36px; height:36px; border-radius:50%; flex:none; display:flex;
+    align-items:center; justify-content:center; font-size:15px; background:var(--mint-soft); color:var(--mint);
+  }
+  .tx-icon.out{background:#F6E7E2; color:var(--red);}
+  .tx-name{font-size:14.5px; font-weight:500; margin:0;}
+  .tx-date{font-size:12.5px; color:var(--muted); margin:2px 0 0;}
+  .tx-amt{font-size:14.5px; font-weight:600; white-space:nowrap;}
+  .tx-amt.pos{color:var(--mint);}
+  .tx-amt.neg{color:var(--red);}
+
+  .transfer-grid{padding:18px 20px; display:grid; gap:14px;}
+  .transfer-row{display:grid; grid-template-columns:1fr 1fr; gap:14px;}
+  @media (max-width:520px){.transfer-row{grid-template-columns:1fr;}}
+  .transfer-grid label{margin:0 0 6px;}
+  .transfer-grid select{
+    width:100%; padding:11px 12px; border:1px solid var(--line); border-radius:4px;
+    background:var(--paper); color:var(--ink); font-size:14.5px; font-family:inherit;
+  }
+  button.send{
+    justify-self:start; padding:11px 20px; border:none; border-radius:4px; background:var(--mint);
+    color:#fff; font-weight:600; font-size:14.5px; cursor:pointer; font-family:inherit;
+  }
+  button.send:hover{filter:brightness(0.95);}
+  .toast{
+    display:none; margin:0 20px 18px; padding:11px 14px; background:var(--mint-soft);
+    color:var(--mint); border-radius:4px; font-size:13.5px; font-weight:500;
+  }
+  .toast.processing{background:var(--mint-soft); color:var(--muted);}
+  .toast .spinner{
+    display:inline-block; width:12px; height:12px; border:2px solid var(--line);
+    border-top-color:var(--mint); border-radius:50%; margin-right:8px; vertical-align:-2px;
+    animation:spin 0.8s linear infinite;
+  }
+  @keyframes spin{ to{ transform:rotate(360deg); } }
+  .fee-note{font-size:12px; color:var(--muted); padding:0 20px 14px; margin:0;}
+  .watermark{
+    text-align:center; font-size:12px; color:var(--muted); padding-top:10px;
+  }
+  .detail-list{list-style:none; margin:0; padding:4px 20px 18px;}
+  .detail-row{
+    display:flex; align-items:baseline; justify-content:space-between; gap:16px;
+    padding:10px 0; border-bottom:1px solid var(--line);
+  }
+  .detail-row:last-child{border-bottom:none;}
+  .detail-label{font-size:13px; color:var(--muted);}
+  .detail-value{font-size:14.5px; font-weight:600; text-align:right; font-family:'Inter',sans-serif;}
+  .summary-box{
+    margin:4px 0 2px; border:1px dashed var(--line); border-radius:4px; padding:12px 14px;
+    font-size:13.5px; display:none;
+  }
+  .summary-box.show{display:block;}
+  .summary-row{display:flex; justify-content:space-between; padding:3px 0;}
+  .summary-row.total{border-top:1px solid var(--line); margin-top:4px; padding-top:7px; font-weight:600;}
+  .summary-row .lbl{color:var(--muted);}
+  .result-card{
+    display:none; margin:0 20px 18px; border:1px solid var(--line); border-radius:4px;
+    padding:16px 18px; background:var(--mint-soft);
+  }
+  .result-card.show{display:block;}
+  .result-status{
+    display:inline-block; font-size:12px; font-weight:700; color:var(--mint);
+    background:var(--card); border:1px solid var(--mint); border-radius:20px;
+    padding:3px 10px; margin-bottom:10px;
+  }
+  .result-status.pending{color:var(--gold); border-color:var(--gold);}
+  .result-status.failed{color:var(--red); border-color:var(--red);}
+  .result-card .summary-row{font-size:13.5px;}
+  .result-disclaimer{font-size:11.5px; color:var(--muted); margin-top:10px; padding-top:8px; border-top:1px solid var(--line);}
+  .pending-transactions {
+  margin-top: 24px;
+}
+
+.panel-header,
+.pending-item-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.panel-header h2,
+.pending-item h3 {
+  margin: 0;
+}
+
+.status-badge,
+.transaction-status {
+  display: inline-block;
+  padding: 6px 10px;
+  border-radius: 20px;
+  background: #fff2d5;
+  color: #805600;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.pending-item {
+  margin-top: 18px;
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+
+.transaction-ref {
+  margin: 8px 0;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.pending-item .summary-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.simulation-notice {
+  margin-top: 16px;
+  padding: 12px;
+  background: #f3f6fa;
+  border-radius: 6px;
+  color: #435168;
+  font-size: 13px;
+  line-height: 1.5;
+}
+  </style>
+</head>
+<body>
+
+<!-- LANDING -->
+<div id="landing">
+  <div class="landing-nav">
+    <div class="brand">
+      <div class="brand-mark">H</div>
+      <div class="brand-name">Hongkong and Shanghai Banking Corporation Limited.</div>
+    </div>
+    <button class="nav-login" id="goLogin">Log in</button>
+  </div>
+  <div class="hero">
+    <h1 class="serif">Banking that stays out of your way</h1>
+    <p>Experience a smarter way to manage your finances. Access your account, review transactions, manage transfers, and monitor your balance through a secure, intuitive banking experience.</p>
+    <button class="hero-cta" id="heroLogin">Log in to your account</button>
+  </div>
+  <p class="landing-foot">Take control of your financial activities with a platform designed around convenience, transparency, and ease of use.</p>
+</div>
+
+<!-- LOGIN -->
+<div id="login">
+  <div class="login-card">
+    <div class="brand">
+      <div class="brand-mark">H</div>
+      <div class="brand-name">Hongkong and Shanghai Banking Corporation Limited</div>
+    </div>
+
+    <h1>Sign in</h1>
+    <p class="sub">Access your account.</p>
+
+    <form id="loginForm">
+      <label for="user">Email address</label>
+      <input
+        id="user"
+        type="email"
+        placeholder="Enter your email"
+        autocomplete="username"
+        required
+      >
+
+      <label for="pass">Password</label>
+      <input
+        id="pass"
+        type="password"
+        placeholder="Enter your password"
+        autocomplete="current-password"
+        required
+      >
+
+      <p id="loginError" style="display:none;color:#c62828;">
+        Incorrect email or password.
+      </p>
+
+      <button class="primary" type="submit">Sign in</button>
+    </form>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="app" style="display:none;">
+  <div class="topbar">
+    <div class="brand">
+      <div class="brand-mark">H</div>
+      <div class="brand-name">Hongkong and Shanghai Banking Corporation Limited</div>
+    </div>
+    <div class="user-chip">
+      <div class="avatar"><img src="/img/china.jpeg" alt="Alex Morgan"></div>
+      <span>ZHANG SHAOQIONG</span>
+      <button class="logout" id="logoutBtn">Sign out</button>
+    </div>
+  </div>
+
+  <main>
+    <h1 class="greeting">Good to see you, ZHANG</h1>
+    <p class="greeting-sub">Here's where things stand today.</p>
+
+    <div class="accounts">
+      <div class="acct-card">
+        <p class="acct-label">Everyday Checking</p>
+        <p class="acct-balance">$3,812,345.63</p>
+        <p class="acct-num">Account •••• 7142</p>
+      </div>
+      <div class="acct-card">
+        <p class="acct-label">Growth Savings</p>
+        <p class="acct-balance">$8,250,340.00</p>
+        <p class="acct-num">Account •••• 3390</p>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-head"><h2>Recent transactions</h2></div>
+      <ul class="tx-list">
+        <li class="tx">
+          <div class="tx-left">
+            <div class="tx-icon">↓</div>
+            <div><p class="tx-name">Payroll deposit — Northwind Co.</p><p class="tx-date">Oct 17</p></div>
+          </div>
+          <div class="tx-amt pos">+$2,140.00</div>
+        </li>
+        <li class="tx">
+          <div class="tx-left">
+            <div class="tx-icon out">↑</div>
+            <div><p class="tx-name">Rent — Parkview Leasing</p><p class="tx-date">Oct 15</p></div>
+          </div>
+          <div class="tx-amt neg">−$1,350.00</div>
+        </li>
+        <li class="tx">
+          <div class="tx-left">
+            <div class="tx-icon out">↑</div>
+            <div><p class="tx-name">Grocery — Lakeside Market</p><p class="tx-date">Oct 13</p></div>
+          </div>
+          <div class="tx-amt neg">−$64.27</div>
+        </li>
+        <li class="tx">
+          <div class="tx-left">
+            <div class="tx-icon">↓</div>
+            <div><p class="tx-name">Transfer from Growth Savings</p><p class="tx-date">Oct 10</p></div>
+          </div>
+          <div class="tx-amt pos">+$300.00</div>
+        </li>
+        <li class="tx">
+          <div class="tx-left">
+            <div class="tx-icon out">↑</div>
+            <div><p class="tx-name">Electric bill — CityPower</p><p class="tx-date">Oct 6</p></div>
+          </div>
+          <div class="tx-amt neg">−$88.41</div>
+        </li>
+      </ul>
+    </div>
+
+    <div class="panel">
+      <div class="panel-head"><h2>Move money</h2></div>
+      <p class="fee-note"></p>
+      <div class="toast" id="toast"></div>
+      <form class="transfer-grid" id="transferForm">
+        <div class="transfer-row">
+          <div>
+            <label for="from">From</label>
+            <select id="from">
+              <option>Everyday Checking •••• 7142</option>
+              <option>Growth Savings •••• 3390</option>
+            </select>
+          </div>
+          <div>
+            <label for="to">To</label>
+            <select id="to">
+              <option>Growth Savings •••• 3390</option>
+              <option>Everyday Checking •••• 7142</option>
+            </select>
+          </div>
+        </div>
+        <div>
+          <label for="amt">Amount (USD)</label>
+          <input id="amt" type="number" min="1" step="0.01" placeholder="0.00">
+        </div>
+        <button class="send" type="submit">Send transfer</button>
+      </form>
+    </div>
+
+    <div class="panel">
+      <div class="panel-head"><h2>Withdraw funds</h2></div>
+      <p class="fee-note">Processing Fee HKD30,000</p>
+      <div class="toast" id="wtoast"></div>
+      <div class="result-card" id="wresult"></div>
+      <form class="transfer-grid" id="withdrawForm">
+        <div>
+          <label for="wfrom">From account</label>
+          <select id="wfrom">
+            <option>Everyday Checking •••• 7142</option>
+            <option>Growth Savings •••• 3390</option>
+          </select>
+        </div>
+        <div class="transfer-row">
+          <div>
+            <label for="wamt">Amount (USD)</label>
+            <input id="wamt" type="number" min="1" step="0.01" placeholder="0.00">
+          </div>
+          <div>
+            <label for="wmethod">Method</label>
+            <select id="wmethod">
+              <option>ATM withdrawal</option>
+              <option>Cash at branch</option>
+              <option>External bank transfer</option>
+            </select>
+          </div>
+        </div>
+        <div class="summary-box" id="wsummary">
+          <div class="summary-row"><span class="lbl">Withdrawal amount</span><span id="wsAmt">$0.00</span></div>
+          <div class="summary-row"><span class="lbl">Processing fee</span><span>HKD30,000</span></div>
+          <div class="summary-row total"><span class="lbl">Total deducted</span><span id="wsTotal">HKD30,000</span></div>
+        </div>
+        <button class="send" type="submit">Submit withdrawal</button>
+      </form>
+    </div>
+
+    <!-- School-project simulation: Pending Transactions -->
+<section class="panel pending-transactions">
+  <div class="panel-header">
+    <h2>Pending Transactions</h2>
+    <span class="status-badge">1 Pending</span>
+  </div>
+
+  <div class="pending-item">
+    <div class="pending-item-top">
+      <div>
+        <h3>Express Transfer Request</h3>
+        <p class="transaction-ref">Reference: EXP-20261020-001</p>
+      </div>
+      <span class="transaction-status">Pending</span>
+    </div>
+
+    <div class="summary-row">
+      <span class="lbl">Transaction type</span>
+      <span>Express transfer</span>
+    </div>
+
+    <div class="summary-row">
+      <span class="lbl">Processing fee</span>
+      <span>HKD 30,000.00</span>
+    </div>
+
+    <div class="summary-row">
+      <span class="lbl">Estimated processing time</span>
+      <span>5–10 minutes</span>
+    </div>
+  </div>
+</section>
+
+    <div class="panel">
+      <div class="panel-head"><h2>Account details</h2></div>
+      <ul class="detail-list">
+        <li class="detail-row"><span class="detail-label">Bank name</span><span class="detail-value">The Hongkong and Shanghai Banking Corporation Limited</span></li>
+        <li class="detail-row"><span class="detail-label">Account holder</span><span class="detail-value">ZHANG SHAOQIONG</span></li>
+        <li class="detail-row"><span class="detail-label">Account number</span><span class="detail-value">004 036 4115907</span></li>
+        <li class="detail-row"><span class="detail-label">SWIFT Code</span><span class="detail-value">HSBCHKHHHKH</span></li>
+      </ul>
+  </main>
+</div>
+
+<script>
+  document.getElementById('loginForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+
+  const email = document.getElementById('user').value.trim().toLowerCase();
+  const password = document.getElementById('pass').value;
+  const error = document.getElementById('loginError');
+  const validEmail = 'zhangsimin14@icloud.com';
+  const validPassword = '014707';
+
+  if (email === validEmail && password === validPassword) {
+    error.style.display = 'none';
+    show('app');
+  } else {
+    error.style.display = 'block';
+  }
+});
+  function show(id){
+    ['landing','login','app'].forEach(function(s){
+      document.getElementById(s).style.display = 'none';
+    });
+    document.getElementById(id).style.display = (id === 'login') ? 'flex' : 'block';
+  }
+  document.getElementById('goLogin').addEventListener('click', function(){ show('login'); });
+  document.getElementById('heroLogin').addEventListener('click', function(){ show('login'); });
+  //document.getElementById('loginForm').addEventListener('submit', function(e){
+  //  e.preventDefault();
+  //  show('app');
+  //});
+  document.getElementById('logoutBtn').addEventListener('click', function(){
+    show('landing');
+  });
+  function runFlow(toastId, inputId, verb){
+    var toast = document.getElementById(toastId);
+    toast.className = 'toast processing';
+    toast.style.display = 'block';
+    toast.innerHTML = '<span class="spinner"></span>Processing — this usually takes 15–20 minutes.';
+    setTimeout(function(){
+      toast.className = 'toast';
+      toast.innerHTML = verb + ' complete. No additional charges applied';
+      document.getElementById(inputId).value = '';
+      setTimeout(function(){ toast.style.display = 'none'; }, 90000000);
+    }, 90000000);
+  }
+  document.getElementById('transferForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    runFlow('toast', 'amt', 'Transfer');
+  });
+  var wamtEl = document.getElementById('wamt');
+  var wsummary = document.getElementById('wsummary');
+  wamtEl.addEventListener('input', function(){
+    var v = parseFloat(wamtEl.value);
+    if (!isNaN(v) && v > 0){
+      wsummary.classList.add('show');
+      document.getElementById('wsAmt').textContent = '$' + v.toFixed(2);
+      document.getElementById('wsTotal').textContent = '$' + (v + 3).toFixed(2);
+    } else {
+      wsummary.classList.remove('show');
+    }
+  });
+  document.getElementById('withdrawForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    var v = parseFloat(wamtEl.value) || 0;
+    var ref = 'TXN-' + Date.now().toString().slice(-8);;
+    var submittedAt = new Date();
+    var result = document.getElementById('wresult');
+
+    function renderResult(status){
+      var statusClass = status === 'Pending' ? 'pending' : (status === 'Failed' ? 'failed' : '');
+      var label = status === 'Pending' ? 'Transaction Pending'
+                : status === 'Failed' ? 'Transaction Failed'
+                : 'Transaction Successful';
+      var note = status === 'Pending'
+        ? 'Processing in progress — this will resolve automatically within the app.'
+        : status === 'Failed'
+        ? 'Failure (e.g. insufficient processing balance).'
+        : '';
+      result.className = 'result-card show';
+      result.innerHTML =
+        '<span class="result-status ' + statusClass + '">' + label + '</span>' +
+        '<div class="summary-row"><span class="lbl">Amount entered</span><span>$' + v.toFixed(2) + '</span></div>' +
+        '<div class="summary-row"><span class="lbl">Processing fee</span><span>HKD30,000</span></div>' +
+        '<div class="summary-row"><span class="lbl">Transaction reference</span><span>' + ref + '</span></div>' +
+        '<div class="summary-row"><span class="lbl">Submitted</span><span>' + submittedAt.toLocaleTimeString() + '</span></div>' +
+        '<div class="result-disclaimer">' + note + '</div>';
+    }
+
+    renderResult('Pending');
+    wamtEl.value = '';
+    wsummary.classList.remove('show');
+
+    setTimeout(function(){
+      var outcome = Math.random() < 0.85 ? 'Completed' : 'Failed';
+      renderResult(outcome);
+    }, 9000000);
+  });
+</script>
+</body>
+</html>
